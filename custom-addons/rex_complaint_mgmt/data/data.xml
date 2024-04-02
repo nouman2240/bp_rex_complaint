@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequences for helpdesk.ticket -->
+        <record id="seq_rex_complaint_ticket" model="ir.sequence">
+            <field name="name">Complaint Ticket</field>
+            <field name="code">rex.ticket.seq</field>
+            <field name="padding">2</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+
+</odoo>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo><data>
+    <record id="complaint_received" model="mail.template">
+        <field name="name">Complaint Received</field>
+        <field name="model_id" ref="rex_complaint_mgmt.model_rex_complaint_ticket"/>
+        <field name="subject">Your complaint has been received successfully</field>
+        <field name="email_from">{{ (object.representative_id.email_formatted) }}</field>
+        <field name="email_to">{{ (object.tenant_id.email_formatted) }}</field>
+        <field name="description">Send customers a confirmation email to notify them that their complaint has been received and is currently being reviewed.</field>
+        <field name="body_html" type="html">
+<div>
+    Dear <t t-out="object.tenant_id.name or 'Madam/Sir'">Madam/Sir</t>,<br /><br />
+    Your complaint has been received and is being reviewed by our representative.<br/><br/>
+    The reference for your ticket is <strong><t t-out="object.complaint_number or ''">10</t></strong>.<br /><br/>
+
+    Best regards,<br/><br/>
+    RealStateX Team
+</div>
+        </field>
+        <field name="lang">{{ object.tenant_id.lang }}</field>
+<!--        <field name="auto_delete" eval="True"/>-->
+    </record>
+    <record id="complaint_closed" model="mail.template">
+        <field name="name">Complaint Closed</field>
+        <field name="model_id" ref="rex_complaint_mgmt.model_rex_complaint_ticket"/>
+        <field name="subject">Your complaint has been closed</field>
+        <field name="email_from">{{ (object.representative_id.email_formatted) }}</field>
+        <field name="email_to">{{ (object.tenant_id.email_formatted) }}</field>
+        <field name="description">Send customers a confirmation email to notify them that their complaint has been either solved or dropped</field>
+        <field name="body_html" type="html">
+<div>
+    Dear <t t-out="object.tenant_id.name or 'Madam/Sir'">Madam/Sir</t>,<br /><br />
+    Your complaint has been <t t-out="object.complaint_stage">closed</t> <br/><br/>
+    The reference for your ticket is <strong><t t-out="object.complaint_number or ''">10</t></strong>.<br /><br/>
+
+    Best regards,<br/><br/>
+    RealStateX Team
+</div>
+        </field>
+        <field name="lang">{{ object.tenant_id.lang }}</field>
+<!--        <field name="auto_delete" eval="True"/>-->
+    </record>
+</data>
+</odoo>

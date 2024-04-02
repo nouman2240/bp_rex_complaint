@@ -1,0 +1,174 @@
+<odoo>
+    <data>
+        <record id="rex_complaint_mgmt.model_rex_complaint_ticket" model="ir.model">
+            <field name="website_form_access">True</field>
+        </record>
+        <function model="ir.model.fields" name="formbuilder_whitelist">
+            <value>rex.complaint.ticket</value>
+            <value eval="[
+            'tenant_name',
+            'tenant_email',
+            'description',
+            'type_id',
+            'building_id',
+            'flat_id',
+            'tenant_id',
+            'representative_id'
+        ]"/>
+        </function>
+        <template id="rex_ticket_submitted" name="Ticket Received">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty h-100">
+                    <div class="container d-flex flex-column justify-content-center h-100">
+                        <div class="oe_structure" id="oe_structure_website_helpdesk_thanks_you"/>
+                        <div class="row justify-content-center mb16">
+                            <t t-if="request.session.get('form_builder_model_model', '') == 'rex.complaint.ticket'">
+                                <t t-set="ticket" t-value="request.website._website_form_last_record()"/>
+                            </t>
+                            <h1 class="text-center">
+                                <i class="fa fa-check-circle fa-1x text-success me-2" role="img" aria-label="Success" title="Success"/>
+                                <t t-if="ticket">
+                                    <span>Your Complaint Number is #<span t-field="ticket.sudo().complaint_number"/>.</span>
+                                </t>
+                            </h1>
+                            <h2 class="text-center">Thank you for contacting us, our team will get right on it!</h2>
+                            <div class="text-center">
+                                <a class="btn btn-primary" href='/'>Go to the Homepage</a>
+                            </div>
+                        </div>
+                        <div class="oe_structure" id="oe_structure_website_helpdesk_thanks_you_bottom"/>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <record id="rex_success_page" model="website.page">
+            <field name="is_published">True</field>
+            <field name="url">/your-ticket-has-been-submitted</field>
+            <field name="website_indexed" eval="False"/>
+            <field name="view_id" ref="rex_ticket_submitted" />
+        </record>
+        <template id="rex_tenant_complaint_form" name="RealStateX: Submit a Complaint Form">
+            <t t-call="website.layout">
+                <div class="container">
+                    <h2 class="text-muted">
+                        Submit a Complaint
+                    </h2>
+                    <div class="oe_structure"/>
+                    <div id="rex_complaint_section">
+                        <section class="s_website_form pt16 pb16 o_colored_level" data-vcss="001" data-snippet="s_website_form" data-name="Form">
+                            <div class="container">
+                                <form id="rex_complaint_form" action="/website/form/" method="post" enctype="multipart/form-data" class="o_mark_required" data-mark="*" data-pre-fill="true" data-success-mode="redirect" data-success-page="/your-ticket-has-been-submitted" data-model_name="rex.complaint.ticket">
+                                    <div class="s_website_form_rows row rex_complaint_form_address s_col_no_bgcolor">
+                                        <div class="mb-0 py-2 s_website_form_field col-12 s_website_form_required" data-type="char" data-name="Field">
+                                            <div class="row s_col_no_resize s_col_no_bgcolor">
+                                                <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="rex1">
+                                                    <span class="s_website_form_label_content">Your Name</span>
+                                                    <span class="s_website_form_mark"> *</span>
+                                                </label>
+                                                <div class="col-sm">
+                                                    <input type="text" class="form-control s_website_form_input" name="tenant_name" required="1" data-fill-with="name" id="rex1"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 py-2 s_website_form_field col-12 s_website_form_required" data-type="email" data-name="Field">
+                                            <div class="row s_col_no_resize s_col_no_bgcolor">
+                                                <label class="col-form-label col-sm-auto s_website_form_label " style="width: 200px" for="rex2">
+                                                    <span class="s_website_form_label_content">Your Email</span>
+                                                    <span class="s_website_form_mark"> *</span>
+                                                </label>
+                                                <div class="col-sm">
+                                                    <input type="email" class="form-control s_website_form_input" name="tenant_email" required="1" data-fill-with="email" id="rex2"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 py-2 s_website_form_field col-12" data-name="Field">
+                                            <div class="row s_col_no_resize s_col_no_bgcolor">
+                                                <label class="col-form-label col-sm-auto s_website_form_label " style="width: 200px" for="rex3">
+                                                    <span class="s_website_form_label_content">Select Building</span>
+                                                </label>
+                                                <div class="col-sm">
+                                                    <select id="rex3" name="building_id" class="form-control">
+                                                        <option value="">select...</option>
+                                                        <t t-foreach="request.env['rex.building'].sudo().search([('available_in_form','=',True)])" t-as="building_no" t-key="building_no.id">
+                                                            <option t-att-value="building_no.id">
+                                                                <t t-esc="building_no.name"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 py-2 s_website_form_field col-12" data-name="Field">
+                                            <div class="row s_col_no_resize s_col_no_bgcolor">
+                                                <label class="col-form-label col-sm-auto s_website_form_label " style="width: 200px" for="rex4">
+                                                    <span class="s_website_form_label_content">Select Flat</span>
+                                                </label>
+                                                <div class="col-sm">
+                                                    <select id="rex4" name="flat_id" class="form-control">
+                                                        <option value="">select...</option>
+                                                        <t t-foreach="request.env['rex.flat'].sudo().search([('available_in_form','=',True)])" t-as="flat_no" t-key="flat_no.id">
+                                                            <option t-att-value="flat_no.id" style="display:none;" t-att-data-building_id="flat_no.building_id.id">
+                                                                <t t-esc="flat_no.name"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 py-2 s_website_form_field col-12" data-type="object" data-name="Field">
+                                            <div class="row s_col_no_resize s_col_no_bgcolor">
+                                                <label class="col-form-label col-sm-auto s_website_form_label " style="width: 200px" for="rex5">
+                                                    <span class="s_website_form_label_content">Type</span>
+                                                </label>
+                                                <div class="col-sm">
+                                                    <select id="rex5" name="type_id" class="form-control">
+                                                        <option value="">select</option>
+                                                        <t t-foreach="request.env['rex.complaint.type'].sudo().search([])" t-as="complaint_type" t-key="complaint_type.id">
+                                                            <option t-att-value="complaint_type.id">
+                                                                <t t-esc="complaint_type.name"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 py-2 s_website_form_field col-12" data-type="text" data-name="Field">
+                                            <div class="row s_col_no_resize s_col_no_bgcolor">
+                                                <label class="col-form-label col-sm-auto s_website_form_label " style="width: 200px" for="rex6">
+                                                    <span class="s_website_form_label_content">Description</span>
+                                                </label>
+                                                <div class="col-sm">
+                                                    <textarea type="text" class="form-control s_website_form_input" name="description" id="rex6" rows="5"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 py-2 col-12 s_website_form_submit" data-name="Submit Button">
+                                            <div style="width: 200px;" class="s_website_form_label"/>
+                                            <a href="#" role="button" class="btn btn-primary btn-lg s_website_form_send o_default_snippet_text">Submit Ticket</a>
+                                            <span id="s_website_form_result"/>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </t>
+        </template>
+        <record id="rex_complaint_form_page" model="website.page">
+            <field name="url">/rex-complaint-form</field>
+            <field name="is_published">True</field>
+            <field name="view_id" ref="rex_tenant_complaint_form"/>
+            <field name="track">True</field>
+            <field name="website_meta_description">This is the complaint page for tenants</field>
+        </record>
+        <record id="menu_rex_complaint_form" model="website.menu">
+            <field name="name">Register Complaint</field>
+            <field name="url">/rex-complaint-form</field>
+            <field name="page_id" ref="rex_complaint_mgmt.rex_complaint_form_page"/>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">93</field>
+        </record>
+    </data>
+</odoo>

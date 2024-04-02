@@ -1,0 +1,24 @@
+<odoo>
+  <data>
+    <menuitem name="Complaint Management" id="rex_complaint_mgmt_menu_root">
+      <menuitem name="Complaints" id="rex_complaint_mgmt_complaints">
+        <menuitem name="Complaints" id="rex_complaint_mgmt_complaintss"
+                  action="rex_complaint_ticket_action"/>
+      </menuitem>
+      <menuitem name="Configuration" id="rex_complaint_mgmt_configuration">
+        <menuitem name="Addresses" id="rex_complaint_mgmt_addresses">
+          <menuitem name="Buildings" id="rex_complaint_mgmt_buildings"
+                    action="rex_building_action"/>
+          <menuitem name="Flats" id="rex_complaint_mgmt_flats"
+                    action="rex_flat_action"/>
+
+        </menuitem>
+        <menuitem name="Complaint Types" id="rex_complaint_mgmt_types"
+                  action="rex_complaint_type_action"/>
+        <menuitem name="Complaint Drop Reasons" id="rex_complaint_mgmt_drop_reason"
+        action="rex_complaint_drop_reason_action"/>
+                  
+      </menuitem>
+    </menuitem>
+  </data>
+</odoo>

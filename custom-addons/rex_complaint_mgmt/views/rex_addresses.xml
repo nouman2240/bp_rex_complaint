@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- building addresss view -->
+    <record model="ir.ui.view" id="rex_building_list">
+      <field name="name">rex_building_list</field>
+      <field name="model">rex.building</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="available_in_form" string="Show on Website Form?"/>
+        </tree>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="rex_building_form">
+      <field name="name">rex_building_form</field>
+      <field name="model">rex.building</field>
+      <field name="arch" type="xml">
+       <form>
+         <group>
+              <group>
+                <field name="name"/>
+          <field name="available_in_form" string="Show on Website Form?"/>
+              </group>
+              <group>
+                <field name="building_name"/>
+                <field name="building_city"/>
+                <field name="postal_code"/>
+              </group>
+            </group>
+       </form>
+      </field>
+    </record>
+
+    <!-- building action -->
+    <record model="ir.actions.act_window" id="rex_building_action">
+      <field name="name">RealStateX Buildings</field>
+      <field name="res_model">rex.building</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- flat addresss view -->
+    <record model="ir.ui.view" id="rex_flat_list">
+      <field name="name">rex_flat_list</field>
+      <field name="model">rex.flat</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="building_id"/>
+          <field name="representative_id"/>
+          <field name="available_in_form" string="Show on Website Form?"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- flat addresss action -->
+    <record model="ir.actions.act_window" id="rex_flat_action">
+      <field name="name">RealStateX Flats</field>
+      <field name="res_model">rex.flat</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+</odoo>

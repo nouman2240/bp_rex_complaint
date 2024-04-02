@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    <!-- complaint views -->
+        <record model="ir.ui.view" id="rex_complaint_ticket_form">
+      <field name="name">rex_complaint_ticket_form</field>
+      <field name="model">rex.complaint.ticket</field>
+      <field name="arch" type="xml">
+        <form string="Complaint Form">
+          <header>
+            <button name="open_mail_compose" type="object" string="Notify Tenant" invisible="complaint_stage not in ['solved','dropped']"/>
+            <field name="complaint_stage" widget="statusbar" options="{'clickable': '1'}"/>
+          </header>
+          <sheet>
+            <group>
+              <group>
+                <field name="type_id" readonly="1"/>
+                <field name="complaint_number"/>
+                <field name="description" readonly="1"/>
+                <field name="drop_reason" required="complaint_stage == 'dropped'" invisible="complaint_stage != 'dropped'"/>
+              </group>
+              <group>
+                <field name="building_id" readonly="1"/>
+                <field name="flat_id" readonly="1"/>
+                <field name="tenant_name" readonly="1"/>
+                <field name="tenant_email" readonly="1"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Action Plan">
+                <field name="action_plan"/>
+              </page>
+              <page string="Extra Info">
+                <group>
+                  <group>
+                    <field name="tenant_id" readonly="1"/>
+                  </group>
+                  <group>
+                    <field name="representative_id"/>
+                  </group>
+                </group>
+              </page>
+            </notebook>
+
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids"/>
+            <field name="message_ids"/>
+            <field name="activity_ids"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="rex_complaint_ticket_list">
+      <field name="name">rex_complaint_ticket_list</field>
+      <field name="model">rex.complaint.ticket</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="type_id"/>
+          <field name="complaint_number"/>
+          <field name="tenant_name"/>
+          <field name="tenant_email"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- complaint action -->
+    <record model="ir.actions.act_window" id="rex_complaint_ticket_action">
+      <field name="name">RealStateX Complaints</field>
+      <field name="res_model">rex.complaint.ticket</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- complaint type view -->
+    <record model="ir.ui.view" id="rex_complaint_ticket_type">
+      <field name="name">rex_complaint_ticket_type</field>
+      <field name="model">rex.complaint.type</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+    <!-- complaint type action -->
+    <record model="ir.actions.act_window" id="rex_complaint_type_action">
+      <field name="name">RealStateX Complaint Types</field>
+      <field name="res_model">rex.complaint.type</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+     <!-- complaint drop reason view -->
+    <record model="ir.ui.view" id="rex_complaint_drop_reason">
+      <field name="name">rex_complaint_drop_reason</field>
+      <field name="model">rex.drop.reason</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+    <!-- complaint drop reason action -->
+    <record model="ir.actions.act_window" id="rex_complaint_drop_reason_action">
+      <field name="name">RealStateX Complaint Drop Reason</field>
+      <field name="res_model">rex.drop.reason</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    
+    
+    </data>
+    
+
+</odoo>

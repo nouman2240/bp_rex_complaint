@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rex_complaint_ticket,rex.complaint.ticket,model_rex_complaint_ticket,base.group_user,1,1,1,1
+access_rex_complaint_type,rex.complaint.type,model_rex_complaint_type,rex_complaint_mgmt.rex_supervisor,1,1,1,1
+access_rex_building,rex.building,model_rex_building,rex_complaint_mgmt.rex_supervisor,1,1,1,1
+access_rex_flat,rex.flat,model_rex_flat,rex_complaint_mgmt.rex_supervisor,1,1,1,1
+access_rex_drop_reason,rex.drop.reason,model_rex_drop_reason,rex_complaint_mgmt.rex_supervisor,1,1,1,1
+
+
